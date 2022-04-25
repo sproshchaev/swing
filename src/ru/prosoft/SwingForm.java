@@ -8,19 +8,27 @@ public class SwingForm {
 
     public static void main(String[] args) {
 
-        
-        createSwingForm();
+        /**
+         * Создание фрейма в потоке обработки событий
+         */
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                createSwingForm();
+            }
+        });
+
 
     }
 
     public static void createSwingForm() {
 
         /**
-         * Создание контейнера верхнего уровня (окна с заданными размерами и заголовком)
+         * Создание контейнера верхнего уровня с заголовком (окна с заданными размерами и заголовком)
          */
         JFrame jFrame = new JFrame("My SWING App");
         int height = 350 * 2; // 300
-        int width = 550 * 2;  // 500
+        int width = 750 * 2;  // 550
 
         /**
          * Отключение изменения размеров окна
@@ -72,8 +80,17 @@ public class SwingForm {
         Border filesPanelBorder = BorderFactory.createTitledBorder("Файлы:");
         filesPanel.setBorder(filesPanelBorder);
 
+        JLabel label1 = new JLabel("Груп."); // todo НГДУ (max 25)
+        String[] elements1 = new String[] {"Группа 1                .", "Группа 2", "Группа 3", "Группа 4", "Группа 5",  "Группа 6",  "Группа 7"};
+        JComboBox<String> comboBox1 = new JComboBox<>(elements1);
+
+        JLabel label2 = new JLabel("Подгруппа :"); // todo Месторожд.: (max 23)
+        String[] elements2 = new String[] {"Подгруппа 1           .", "Подгруппа 2", "Подгруппа 3", "Подгруппа 4", "Подгруппа 5"};
+        JComboBox<String> comboBox2 = new JComboBox<>(elements2);
+
         JTextField textField1 = new JTextField(10);
         JButton button1 = new JButton("Открыть");
+        // button1.addActionListener(this); // todo переделать статику в класс
 
         JTextField textField2 = new JTextField(10);
         JButton button2 = new JButton("Открыть");
@@ -84,12 +101,14 @@ public class SwingForm {
         JTextField textField4 = new JTextField(10);
         JButton button4 = new JButton("Открыть");
 
-        JLabel label = new JLabel("Месторожд.:");
-        String[] elements = new String[] {"Месторождение 1", "Месторождение 1", "Месторождение 3", "Месторождение 4", "Месторождение 5"};
-        JComboBox<String> comboBox = new JComboBox<>(elements);
-        comboBox.setSize(200, 300);
+        JLabel label3 = new JLabel("                         ");
+        JButton buttonRun = new JButton("Обработка");
 
-        JButton buttonRun = new JButton("Run");
+        filesPanel.add(label1);
+        filesPanel.add(comboBox1);
+
+        filesPanel.add(label2);
+        filesPanel.add(comboBox2);
 
         filesPanel.add(textField1);
         filesPanel.add(button1);
@@ -103,21 +122,19 @@ public class SwingForm {
         filesPanel.add(textField4);
         filesPanel.add(button4);
 
-        filesPanel.add(label);
-        filesPanel.add(comboBox);
-
+        filesPanel.add(label3);
         filesPanel.add(buttonRun);
 
         mainPanel.add(filesPanel, BorderLayout.NORTH);
 
         /**
-         * Панель "Сканирование"
+         * Панель "Протокол обработки"
          */
         JPanel scanPanel = new JPanel();
         Border scanPanelBorder = BorderFactory.createTitledBorder("Протокол обработки:");
         scanPanel.setBorder(scanPanelBorder);
 
-        JTextArea textArea = new JTextArea("Многострочное поле", 27, 96);
+        JTextArea textArea = new JTextArea("Многострочное поле", 27, 130);
         textArea.setFont(new Font("Dialog", Font.PLAIN, 14));
         textArea.setTabSize(10);
         textArea.setSize(200, 200);
