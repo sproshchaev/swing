@@ -71,7 +71,12 @@ public class SwingForm {
     public SwingForm() {
 
         jFrame = new JFrame("My SWING App");
-        jFrame.setBounds(0, 0, screenDimension.width, screenDimension.height);
+
+        //jFrame.setBounds(0, 0, screenDimension.width, screenDimension.height);
+
+        jFrame.setSize((int) (screenDimension.width * 0.9), (int) (screenDimension.height * 0.9));
+        jFrame.setLocationRelativeTo(null);
+
         jFrame.setResizable(false);
         jFrame.setIconImage(new ImageIcon("icon.png").getImage());
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,7 +131,7 @@ public class SwingForm {
         button4 = new JButton("Открыть");
         filesPanel.add(button4);
 
-        label3 = new JLabel(fillStringSymbol('\u0020', 26));
+        label3 = new JLabel(fillStringSymbol('\u0020', 2));
         filesPanel.add(label3);
 
         button5 = new JButton("Обработка");
@@ -145,7 +150,9 @@ public class SwingForm {
         protocolPanel = new JPanel();
         protocolPanel.setBorder(BorderFactory.createTitledBorder("Протокол обработки:"));
 
-        textArea = new JTextArea("", ((screenDimension.height / 25) + 1), (screenDimension.width / 12) + 5);
+        // textArea = new JTextArea("", ((screenDimension.height / 25) + 1), (screenDimension.width / 12) + 5);
+        textArea = new JTextArea("", (screenDimension.height / 24), (screenDimension.width / 15));
+
         textArea.setFont(new Font("Dialog", Font.PLAIN, 14));
         textArea.setVisible(true);
 
