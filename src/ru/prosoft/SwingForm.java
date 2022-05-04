@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
  * @author Sergey Proshchaev
  * @version 1.0
  */
-
 public class SwingForm {
 
     /**
@@ -71,8 +70,6 @@ public class SwingForm {
     public SwingForm() {
 
         jFrame = new JFrame("My SWING App");
-
-        //jFrame.setBounds(0, 0, screenDimension.width, screenDimension.height);
 
         jFrame.setSize((int) (screenDimension.width * 0.9), (int) (screenDimension.height * 0.9));
         jFrame.setLocationRelativeTo(null);
@@ -150,8 +147,7 @@ public class SwingForm {
         protocolPanel = new JPanel();
         protocolPanel.setBorder(BorderFactory.createTitledBorder("Протокол обработки:"));
 
-        // textArea = new JTextArea("", ((screenDimension.height / 25) + 1), (screenDimension.width / 12) + 5);
-        textArea = new JTextArea("", (screenDimension.height / 24), (screenDimension.width / 15));
+        textArea = new JTextArea("", (screenDimension.height / 28), (screenDimension.width / 15));
 
         textArea.setFont(new Font("Dialog", Font.PLAIN, 14));
         textArea.setVisible(true);
@@ -204,7 +200,6 @@ public class SwingForm {
     /**
      * Внутренний класс Button1Click обработка нажатия кнопки Button1
      */
-
     public class Button1Click implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
@@ -218,7 +213,6 @@ public class SwingForm {
     /**
      * Внутренний класс Button2Click обработка нажатия кнопки Button2
      */
-
     public class Button2Click implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
@@ -232,7 +226,6 @@ public class SwingForm {
     /**
      * Внутренний класс Button3Click обработка нажатия кнопки Button3
      */
-
     public class Button3Click implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
@@ -268,14 +261,13 @@ public class SwingForm {
 
             progressBar.setStringPainted(true);
             progressBar.setMinimum(0);
-            progressBar.setMaximum(10000000);
-            for (int i = 0; i <= 10000000; i++) {
+            progressBar.setMaximum(1000);
+            for (int i = 0; i <= 1000; i++) {
                 progressBar.setValue(i);
             }
 
             JOptionPane.showMessageDialog(null, "Обработка завершена!",
                     "Информация", JOptionPane.INFORMATION_MESSAGE);
-
         }
     }
 
@@ -287,7 +279,6 @@ public class SwingForm {
      * @param fileType
      * @return
      */
-
     public FileDialog runFileOpenDialog(String title, String directory, String fileType) {
 
         FileDialog fileDialog = new java.awt.FileDialog(jFrame, title, FileDialog.LOAD);
@@ -308,7 +299,6 @@ public class SwingForm {
      * @param fileType
      * @return
      */
-
     public FileDialog runFileSaveDialog(String title, String directory, String fileType) {
 
         FileDialog fileDialog = new java.awt.FileDialog(jFrame, title, FileDialog.SAVE);
