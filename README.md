@@ -11,3 +11,5 @@
 4. JProgressBar полоса загрузки https://bit.ly/39qFtlI
 5. Окно сообщения в Java https://bit.ly/3s28Elz
 6. Как я могу изменить ширину выпадающего списка JComboBox? https://bit.ly/3OM2NdD
+7. Диалоговое окно JFileChooser https://bit.ly/3w79hvr
+8. Используем JFileChooser для выбора файла https://bit.ly/3vFHjHU
