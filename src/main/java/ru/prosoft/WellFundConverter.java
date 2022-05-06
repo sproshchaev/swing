@@ -1,40 +1,88 @@
 package ru.prosoft;
 
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Класс WellFundConverter содержит методы обработки файлов формата MS Excel
+ *
+ * @author Sergey Proshchaev
+ * @version 1.0
  */
 public class WellFundConverter {
 
     /**
-     * Поля класса
+     * Поля класса - имена обрабатываемых файлов
      */
+    private String comboBox1Value;
+    private String comboBox2Value;
     private String fileInStr1;
     private String fileInStr2;
     private String fileInStr3;
     private String fileInStr4;
-
     private String fileOutStr;
+    private XSSFWorkbook excelOutBook;
 
 
     /**
      * Запуск обработки файлов fileInStr1, fileInStr2,... fileInStr4
      * и формирование файла fileOutStr
      */
-    public void runConverter() {
+    public void runConverter() throws IOException {
 
-        /**
-         * Эмуляция процесса обработки
-         */
-        for (int i = 0; i <= 1000; i++) {
-            //swingForm.progressBarStep();
-        }
+        excelOutBook = new XSSFWorkbook();
+        FileOutputStream fileOut = new FileOutputStream("1.xlsx");
+        XSSFSheet excelOutBookSheet = excelOutBook.createSheet("Лист1");
+
+        runFileScan(fileInStr1);
+        runFileScan(fileInStr2);
+        runFileScan(fileInStr3);
+        runFileScan(fileInStr4);
+
+        //swingForm.progressBarStep();
+
+        excelOutBook.write(fileOut);
+        fileOut.close();
 
     }
 
     /**
+     * Метод runFileScan() сканирует файлы MS Excel с однотипной структурой
+     * @param fileInStr
+     */
+    private void runFileScan(String fileInStr) throws IOException {
+        // XSSFWorkbook excelInBook = new XSSFWorkbook(new FileInputStream(fileInStr));
+        // XSSFSheet excelInBookSheet = excelInBook.getSheet("Лист1"); // или по индексу листа
+
+        // excelInBook.close();
+    }
+
+
+    /**
      * Геттеры и сеттеры полей класса
      */
+    public String getComboBox1Value() {
+        return comboBox1Value;
+    }
+
+    public void setComboBox1Value(String comboBox1Value) {
+        this.comboBox1Value = comboBox1Value;
+    }
+
+    public String getComboBox2Value() {
+        return comboBox2Value;
+    }
+
+    public void setComboBox2Value(String comboBox2Value) {
+        this.comboBox2Value = comboBox2Value;
+    }
+
     public String getFileInStr1() {
         return fileInStr1;
     }
