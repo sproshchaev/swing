@@ -48,6 +48,14 @@ public class SwingForm {
     JButton button5;
     JTextArea textArea;
     JProgressBar progressBar;
+    Integer progressBarMinimum;
+    Integer progressBarMaximum;
+    Integer progressBarValue;
+
+    /**
+     * Поле класса с обработкой файлов
+     */
+    private WellFundConverter wellFundConverter;
 
     /**
      * Создание главного окна (фрейма) в потоке обработки событий
@@ -59,7 +67,9 @@ public class SwingForm {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+
                 new SwingForm();
+
             }
         });
     }
@@ -161,10 +171,18 @@ public class SwingForm {
 
         progressBar = new JProgressBar();
         progressBar.setStringPainted(true);
+        progressBarMinimum = 0;
+        progressBarMaximum = 1000;
+        progressBarValue = 0;
 
         indicatorPanel.add(progressBar);
 
         mainPanel.add(indicatorPanel, BorderLayout.SOUTH);
+
+        /**
+         * Инициализация экземпляра класса с обработкой файлов
+         */
+        wellFundConverter = new WellFundConverter();
 
         jFrame.setVisible(true);
 
@@ -179,7 +197,6 @@ public class SwingForm {
             textArea.append("ComboBox выбран " + comboBox1.getSelectedItem() + "\n");
             textArea.append("ComboBox2 заполнение элементами..." + "\n");
 
-            // заполнение элементами ComboBox2
             comboBox2FillFromElements2();
 
             textArea.append("ComboBox2 заполнен!" + "\n");
@@ -207,6 +224,13 @@ public class SwingForm {
 
             textField1.setText(e.getActionCommand());
             textArea.append("Выбран " + e.getActionCommand() + " Файл " + fileName1.getFile() + " из " + fileName1.getDirectory() + "\n");
+
+            /**
+             * Заносим имя файла в поле имени файла 1 класса с обработкой
+             */
+            wellFundConverter.setFileInStr1(fileName1.getFile());
+
+
         }
     }
 
@@ -220,6 +244,12 @@ public class SwingForm {
 
             textField2.setText(e.getActionCommand());
             textArea.append("Выбран " + e.getActionCommand() + "\n");
+
+            /**
+             * Заносим имя файла в поле имени файла 1 класса с обработкой
+             */
+            wellFundConverter.setFileInStr1(fileName2.getFile());
+
         }
     }
 
@@ -233,6 +263,12 @@ public class SwingForm {
 
             textField3.setText(e.getActionCommand());
             textArea.append("Выбран " + e.getActionCommand() + "\n");
+
+            /**
+             * Заносим имя файла в поле имени файла 1 класса с обработкой
+             */
+            wellFundConverter.setFileInStr1(fileName3.getFile());
+
         }
     }
 
@@ -246,6 +282,12 @@ public class SwingForm {
 
             textField4.setText(e.getActionCommand());
             textArea.append("Выбран " + e.getActionCommand() + "\n");
+
+            /**
+             * Заносим имя файла в поле имени файла 1 класса с обработкой
+             */
+            wellFundConverter.setFileInStr1(fileName4.getFile());
+
         }
     }
 
@@ -259,12 +301,10 @@ public class SwingForm {
 
             textArea.append("Создание файла: " + runFileSaveDialog.getFile());
 
-            progressBar.setStringPainted(true);
-            progressBar.setMinimum(0);
-            progressBar.setMaximum(1000);
-            for (int i = 0; i <= 1000; i++) {
-                progressBar.setValue(i);
-            }
+            /**
+             * Запускаем процесс обработки
+             */
+            wellFundConverter.runConverter();
 
             JOptionPane.showMessageDialog(null, "Обработка завершена!",
                     "Информация", JOptionPane.INFORMATION_MESSAGE);
@@ -321,7 +361,7 @@ public class SwingForm {
          * Эмулятор заполнения групп в comboBox1 от 1 до 7
          */
         for (int i = 0; i < 7; i++) {
-            comboBox1.addItem(fixString("Группа " + (i + 1), 25)+"!");
+            comboBox1.addItem(fixString("Группа " + (i + 1), 25) + "!");
         }
     }
 
@@ -382,4 +422,13 @@ public class SwingForm {
             return string.substring(0, fixSize);
         }
     }
+
+    /**
+     * Индикация процесса выполнения
+     */
+    public void progressBarStep() {
+        progressBar.setValue(++progressBarValue);
+    }
+
 }
+
