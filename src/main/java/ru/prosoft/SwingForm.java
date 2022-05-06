@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Класс SwingForm содержит методы работы с компонентами GUI
@@ -194,6 +196,8 @@ public class SwingForm {
     public class ComboBox1SelectedItem implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
+            wellFundConverter.setComboBox1Value(comboBox1.getSelectedItem().toString());
+
             textArea.append("ComboBox выбран " + comboBox1.getSelectedItem() + "\n");
             textArea.append("ComboBox2 заполнение элементами..." + "\n");
 
@@ -209,6 +213,7 @@ public class SwingForm {
      */
     public class ComboBox2SelectedItem implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            wellFundConverter.setComboBox2Value(comboBox2.getSelectedItem().toString());
             textArea.append("ComboBox выбран " + comboBox2.getSelectedItem() + "\n");
         }
     }
@@ -304,7 +309,11 @@ public class SwingForm {
             /**
              * Запускаем процесс обработки
              */
-            wellFundConverter.runConverter();
+            try {
+                wellFundConverter.runConverter();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
 
             JOptionPane.showMessageDialog(null, "Обработка завершена!",
                     "Информация", JOptionPane.INFORMATION_MESSAGE);
@@ -351,6 +360,22 @@ public class SwingForm {
         return fileDialog;
     }
 
+    /**
+     * Метод runFileChooser() вызывает диалог выбора файла на основе Swing компонента JFileChooser (легковесный)
+     * @param title заголовок диалогового окна
+     * @return
+     */
+    public File runFileChooser(String title) {
+        File file = null;
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setDialogTitle(title);
+        int ret = jFileChooser.showDialog(null, "Открыть файл");
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            file = jFileChooser.getSelectedFile();
+            // ... обработка ...
+        }
+        return file;
+    }
 
     /**
      * Метод fillElements1() заполняет элементами массив строк elements1
