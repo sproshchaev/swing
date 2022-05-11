@@ -40,6 +40,11 @@ public class WellFundConverter {
         FileOutputStream fileOut = new FileOutputStream("1.xlsx");
         XSSFSheet excelOutBookSheet = excelOutBook.createSheet("Лист1");
 
+        System.out.println("fileInStr1=" + fileInStr1);
+        System.out.println("fileInStr2=" + fileInStr2);
+        System.out.println("fileInStr3=" + fileInStr3);
+        System.out.println("fileInStr4=" + fileInStr4);
+
         runFileScan(fileInStr1);
         runFileScan(fileInStr2);
         runFileScan(fileInStr3);
@@ -57,10 +62,13 @@ public class WellFundConverter {
      * @param fileInStr
      */
     private void runFileScan(String fileInStr) throws IOException {
-        // XSSFWorkbook excelInBook = new XSSFWorkbook(new FileInputStream(fileInStr));
-        // XSSFSheet excelInBookSheet = excelInBook.getSheet("Лист1"); // или по индексу листа
 
-        // excelInBook.close();
+        XSSFWorkbook excelInBook = new XSSFWorkbook(new FileInputStream(fileInStr));
+        XSSFSheet excelInBookSheet = excelInBook.getSheet("Лист1"); // или по индексу листа
+
+        //
+
+        excelInBook.close();
     }
 
 

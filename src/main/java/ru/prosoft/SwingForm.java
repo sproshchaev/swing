@@ -256,7 +256,7 @@ public class SwingForm {
             /**
              * Заносим имя файла в поле имени файла 1 класса с обработкой
              */
-            wellFundConverter.setFileInStr1(fileName2.getDirectory() + fileName2.getFile());
+            wellFundConverter.setFileInStr2(fileName2.getDirectory() + fileName2.getFile());
 
         }
     }
@@ -275,7 +275,7 @@ public class SwingForm {
             /**
              * Заносим имя файла в поле имени файла 1 класса с обработкой
              */
-            wellFundConverter.setFileInStr1(fileName3.getDirectory() + fileName3.getFile());
+            wellFundConverter.setFileInStr3(fileName3.getDirectory() + fileName3.getFile());
 
         }
     }
@@ -294,7 +294,7 @@ public class SwingForm {
             /**
              * Заносим имя файла в поле имени файла 1 класса с обработкой
              */
-            wellFundConverter.setFileInStr1(fileName4.getDirectory() + fileName4.getFile());
+            wellFundConverter.setFileInStr4(fileName4.getDirectory() + fileName4.getFile());
 
         }
     }
