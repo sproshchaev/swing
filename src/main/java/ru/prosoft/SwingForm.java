@@ -48,7 +48,8 @@ public class SwingForm {
     JButton button3;
     JButton button4;
     JButton button5;
-    JTextArea textArea;
+
+    public JTextArea textArea;
     JProgressBar progressBar;
     Integer progressBarMinimum;
     Integer progressBarMaximum;
@@ -70,11 +71,14 @@ public class SwingForm {
             @Override
             public void run() {
 
-                new SwingForm();
+                //new SwingForm();
+                SwingForm swingForm = new SwingForm();
 
             }
         });
     }
+
+
 
     /**
      * Конструктор класса без параметров, инициализирующий компоненты GUI
@@ -230,7 +234,7 @@ public class SwingForm {
 
             FileDialog fileName1 = runFileOpenDialog("Открыть файл 1", "C:\\", "*.xls");
 
-            textField1.setText(e.getActionCommand());
+            textField1.setText(fileName1.getFile());
             textArea.append("Выбран " + e.getActionCommand() + " Файл " + fileName1.getFile() + " из " + fileName1.getDirectory() + "\n");
 
             /**
@@ -250,7 +254,7 @@ public class SwingForm {
 
             FileDialog fileName2 = runFileOpenDialog("Открыть файл 2", "C:\\", "*.xls");
 
-            textField2.setText(e.getActionCommand());
+            textField2.setText(fileName2.getFile());
             textArea.append("Выбран " + e.getActionCommand() + " Файл " + fileName2.getFile() + " из " + fileName2.getDirectory() + "\n");
 
             /**
@@ -269,7 +273,7 @@ public class SwingForm {
 
             FileDialog fileName3 = runFileOpenDialog("Открыть файл 3", "C:\\", "*.xls");
 
-            textField3.setText(e.getActionCommand());
+            textField3.setText(fileName3.getFile());
             textArea.append("Выбран " + e.getActionCommand() + " Файл " + fileName3.getFile() + " из " + fileName3.getDirectory() + "\n");
 
             /**
@@ -288,7 +292,7 @@ public class SwingForm {
 
             FileDialog fileName4 = runFileOpenDialog("Открыть файл 4", "C:\\", "*.xls");
 
-            textField4.setText(e.getActionCommand());
+            textField4.setText(fileName4.getFile());
             textArea.append("Выбран " + e.getActionCommand() + " Файл " + fileName4.getFile() + " из " + fileName4.getDirectory() + "\n");
 
             /**
@@ -313,7 +317,7 @@ public class SwingForm {
              * Запускаем процесс обработки
              */
             try {
-                wellFundConverter.runConverter();
+                wellFundConverter.runConverter(textArea);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -457,6 +461,15 @@ public class SwingForm {
     public void progressBarStep() {
         progressBar.setValue(++progressBarValue);
     }
+
+    /**
+     * Внесение информации в textArea
+     * @param textArea
+     */
+    public void setTextArea(String string) {
+        textArea.append(string);
+    }
+
 
 }
 

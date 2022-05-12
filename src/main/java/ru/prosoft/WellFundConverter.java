@@ -1,13 +1,16 @@
 package ru.prosoft;
 
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.ss.format.CellFormatType;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import ru.prosoft.SwingForm;
+
+import javax.swing.*;
 
 /**
  * Класс WellFundConverter содержит методы обработки файлов формата MS Excel
@@ -34,7 +37,7 @@ public class WellFundConverter {
      * Запуск обработки файлов fileInStr1, fileInStr2,... fileInStr4
      * и формирование файла fileOutStr
      */
-    public void runConverter() throws IOException {
+    public void runConverter(JTextArea textArea) throws IOException {
 
         excelOutBook = new XSSFWorkbook();
         FileOutputStream fileOut = new FileOutputStream("1.xlsx");
@@ -45,10 +48,11 @@ public class WellFundConverter {
         System.out.println("fileInStr3=" + fileInStr3);
         System.out.println("fileInStr4=" + fileInStr4);
 
-        runFileScan(fileInStr1);
-        runFileScan(fileInStr2);
-        runFileScan(fileInStr3);
-        runFileScan(fileInStr4);
+
+        runFileScan(fileInStr1, textArea);
+        runFileScan(fileInStr2, textArea);
+        runFileScan(fileInStr3, textArea);
+        runFileScan(fileInStr4, textArea);
 
         //swingForm.progressBarStep();
 
@@ -61,14 +65,22 @@ public class WellFundConverter {
      * Метод runFileScan() сканирует файлы MS Excel с однотипной структурой
      * @param fileInStr
      */
-    private void runFileScan(String fileInStr) throws IOException {
+    private void runFileScan(String fileInStr, JTextArea textArea) throws IOException {
+
+        textArea.append("Обработка " + fileInStr + "...");
 
         XSSFWorkbook excelInBook = new XSSFWorkbook(new FileInputStream(fileInStr));
-        XSSFSheet excelInBookSheet = excelInBook.getSheet("Лист1"); // или по индексу листа
+        XSSFSheet excelInBookSheet = excelInBook.getSheetAt(0); // getSheet("Лист1"); // или по индексу листа
 
         //
 
+        System.out.println("getFirstRowNum()=" + excelInBookSheet.getFirstRowNum());
+        System.out.println("getLastRowNum()=" + excelInBookSheet.getLastRowNum());
+
         excelInBook.close();
+
+        textArea.append("Обработка " + fileInStr + " завершена!");
+
     }
 
 
@@ -130,4 +142,26 @@ public class WellFundConverter {
     public void setFileOutStr(String fileOutStr) {
         this.fileOutStr = fileOutStr;
     }
+
+    /**
+     * Метод readFromCell читает значение из ячейки листа MS Excel
+     *
+     * @param - XSSFSheet excelSheet имя листа
+     * @param - int row строка ячейки
+     * @param - int column столбец ячейки
+     * @return - String значение ячейки в текстовом формате
+     */
+    private static String readFromCell(XSSFSheet excelSheet, int row, int column) {
+        String resultReadFromCell = "null";
+
+        XSSFRow rowObj = excelSheet.getRow(row);
+        XSSFCell cellObj;
+
+        if (rowObj != null) {
+            cellObj = rowObj.getCell(column);
+            resultReadFromCell = cellObj.toString();
+        }
+        return resultReadFromCell;
+    }
+
 }
