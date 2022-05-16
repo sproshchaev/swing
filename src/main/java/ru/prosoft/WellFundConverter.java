@@ -1,16 +1,13 @@
 package ru.prosoft;
 
-
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.ss.format.CellFormatType;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import ru.prosoft.SwingForm;
-
-import javax.swing.*;
 
 /**
  * Класс WellFundConverter содержит методы обработки файлов формата MS Excel
@@ -32,12 +29,19 @@ public class WellFundConverter {
     private String fileOutStr;
     private XSSFWorkbook excelOutBook;
 
+    /**
+     * Переменная для хранения интерфейса
+     */
+    private ISwingForm iSwingForm;
+
 
     /**
      * Запуск обработки файлов fileInStr1, fileInStr2,... fileInStr4
      * и формирование файла fileOutStr
      */
-    public void runConverter(JTextArea textArea) throws IOException {
+    public void runConverter(ISwingForm iSwingForm) throws IOException {
+
+        this.iSwingForm = iSwingForm;
 
         excelOutBook = new XSSFWorkbook();
         FileOutputStream fileOut = new FileOutputStream("1.xlsx");
@@ -49,12 +53,10 @@ public class WellFundConverter {
         System.out.println("fileInStr4=" + fileInStr4);
 
 
-        runFileScan(fileInStr1, textArea);
-        runFileScan(fileInStr2, textArea);
-        runFileScan(fileInStr3, textArea);
-        runFileScan(fileInStr4, textArea);
-
-        //swingForm.progressBarStep();
+        runFileScan(fileInStr1);
+        runFileScan(fileInStr2);
+        runFileScan(fileInStr3);
+        runFileScan(fileInStr4);
 
         excelOutBook.write(fileOut);
         fileOut.close();
@@ -63,11 +65,12 @@ public class WellFundConverter {
 
     /**
      * Метод runFileScan() сканирует файлы MS Excel с однотипной структурой
+     *
      * @param fileInStr
      */
-    private void runFileScan(String fileInStr, JTextArea textArea) throws IOException {
+    private void runFileScan(String fileInStr) throws IOException {
 
-        textArea.append("Обработка " + fileInStr + "...");
+        iSwingForm.textAreaAppend("Обработка " + fileInStr + "...");
 
         XSSFWorkbook excelInBook = new XSSFWorkbook(new FileInputStream(fileInStr));
         XSSFSheet excelInBookSheet = excelInBook.getSheetAt(0); // getSheet("Лист1"); // или по индексу листа
@@ -79,7 +82,7 @@ public class WellFundConverter {
 
         excelInBook.close();
 
-        textArea.append("Обработка " + fileInStr + " завершена!");
+        iSwingForm.textAreaAppend("Обработка " + fileInStr + " завершена!");
 
     }
 

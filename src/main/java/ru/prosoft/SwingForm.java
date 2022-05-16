@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author Sergey Proshchaev
  * @version 1.0
  */
-public class SwingForm {
+public class SwingForm implements ISwingForm {
 
     /**
      * Разрешение экрана
@@ -77,7 +77,6 @@ public class SwingForm {
             }
         });
     }
-
 
 
     /**
@@ -193,6 +192,7 @@ public class SwingForm {
         jFrame.setVisible(true);
 
     }
+
 
     /**
      * Внутренний класс ComboBox1SelectedItem обрабатывает выбор элемента в ComboBox1
@@ -317,7 +317,7 @@ public class SwingForm {
              * Запускаем процесс обработки
              */
             try {
-                wellFundConverter.runConverter(textArea);
+                runWellFundConverter();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -327,6 +327,14 @@ public class SwingForm {
         }
     }
 
+    /**
+     * Метод runWellFundConverter вызывает метод (обработчик) из класса WellFundConverter
+     *
+     * @throws IOException
+     */
+    private void runWellFundConverter() throws IOException {
+        wellFundConverter.runConverter(this);
+    }
 
     /**
      * Метод runFileOpenDialog() запускает диалог выбора файла для открытия
@@ -369,6 +377,7 @@ public class SwingForm {
 
     /**
      * Метод runFileChooser() вызывает диалог выбора файла на основе Swing компонента JFileChooser (легковесный)
+     *
      * @param title заголовок диалогового окна
      * @return
      */
@@ -409,7 +418,8 @@ public class SwingForm {
          */
         int randomNumber = (int) (Math.random() * 10);
         for (int i = 0; i < randomNumber; i++) {
-            comboBox2.addItem(fixString(fixString(comboBox1.getSelectedItem().toString(), 12) + " П/группа " + (i + 1), 25) + "!");
+            comboBox2.addItem(fixString(fixString(comboBox1.getSelectedItem().toString(), 12) + " П/группа "
+                    + (i + 1), 25) + "!");
         }
     }
 
@@ -463,13 +473,15 @@ public class SwingForm {
     }
 
     /**
-     * Внесение информации в textArea
-     * @param textArea
+     * Переопределение метода из интерфейса ISwingForm
+     * Метод textAreaAppend добавляет строку в компонент textArea
+     *
+     * @param string
      */
-    public void setTextArea(String string) {
-        textArea.append(string);
+    @Override
+    public void textAreaAppend(String string) {
+        textArea.append(string + "\n");
     }
-
 
 }
 
