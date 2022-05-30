@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -34,33 +35,30 @@ public class WellFundConverter {
      */
     private ISwingForm iSwingForm;
 
-
     /**
      * Запуск обработки файлов fileInStr1, fileInStr2,... fileInStr4
      * и формирование файла fileOutStr
      */
-    public void runConverter(ISwingForm iSwingForm) throws IOException {
-
+    public void runConverter(ISwingForm iSwingForm) {
         this.iSwingForm = iSwingForm;
-
         excelOutBook = new XSSFWorkbook();
-        FileOutputStream fileOut = new FileOutputStream("1.xlsx");
-        XSSFSheet excelOutBookSheet = excelOutBook.createSheet("Лист1");
-
-        System.out.println("fileInStr1=" + fileInStr1);
-        System.out.println("fileInStr2=" + fileInStr2);
-        System.out.println("fileInStr3=" + fileInStr3);
-        System.out.println("fileInStr4=" + fileInStr4);
-
-
-        runFileScan(fileInStr1);
-        runFileScan(fileInStr2);
-        runFileScan(fileInStr3);
-        runFileScan(fileInStr4);
-
-        excelOutBook.write(fileOut);
-        fileOut.close();
-
+        FileOutputStream fileOut = null;
+        try {
+            fileOut = new FileOutputStream("1.xlsx");
+            XSSFSheet excelOutBookSheet = excelOutBook.createSheet("Лист1");
+            runFileScan(fileInStr1);
+            runFileScan(fileInStr2);
+            runFileScan(fileInStr3);
+            runFileScan(fileInStr4);
+            excelOutBook.write(fileOut);
+            fileOut.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -78,6 +76,10 @@ public class WellFundConverter {
             iSwingForm.progressBarSetMin(0);
             iSwingForm.progressBarSetMax(0);
             for (int i = excelInBookSheet.getFirstRowNum(); i < excelInBookSheet.getLastRowNum(); i++) {
+                if (readFromCell(excelInBookSheet, i, 0).contains("Строка_с_листа")) {
+                    iSwingForm.textAreaAppend("Найдена строка в ячейке "
+                            + readFromCell(excelInBookSheet, i, 0));
+                }
                 iSwingForm.progressBarStep();
             }
             excelInBook.close();
@@ -158,15 +160,16 @@ public class WellFundConverter {
      */
     private static String readFromCell(XSSFSheet excelSheet, int row, int column) {
         String resultReadFromCell = "null";
-
         XSSFRow rowObj = excelSheet.getRow(row);
         XSSFCell cellObj;
-
         if (rowObj != null) {
             cellObj = rowObj.getCell(column);
-            resultReadFromCell = cellObj.toString();
+            if (cellObj != null) {
+                resultReadFromCell = cellObj.toString();
+            } else {
+                resultReadFromCell = "";
+            }
         }
         return resultReadFromCell;
     }
-
 }
