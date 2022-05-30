@@ -32,4 +32,22 @@ public interface ISwingForm {
      */
     void textAreaAppend(String string);
 
+    /**
+     * Метод progressBarSetMin вызывает методы .setMinimum() и .setValue(0) для компонента JProgressBar
+     * @param min
+     */
+    void progressBarSetMin(int min);
+
+    /**
+     * Метод progressBarSetMax вызывает метод .setMaximum() для компонента JProgressBar
+     * @param max
+     */
+    void progressBarSetMax(int max);
+
+    /**
+     * Метод progressBarStep вызывает метод .setValue() для компонента JProgressBar
+     * с инкрементным увеличением на один шаг
+     */
+    void progressBarStep();
+
 }

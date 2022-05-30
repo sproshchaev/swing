@@ -6,7 +6,7 @@
 
   <groupId>ru.prosoft</groupId>
   <artifactId>Swing</artifactId>
-  <version>1.4</version>
+  <version>1.5</version>
 
   <name>Swing</name>
   <!-- FIXME change it to the project's website -->
@@ -37,7 +37,6 @@
       <artifactId>poi-ooxml</artifactId>
       <version>3.12</version>
     </dependency>
-
 
   </dependencies>
 
