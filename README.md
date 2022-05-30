@@ -1,6 +1,6 @@
 [![Java](https://img.shields.io/badge/Java-E43222??style=for-the-badge&logo=java&logoColor=FFFFFF)](https://java.com/)
 
-# Swing ver 1.4 (mvn)
+# Swing ver 1.5 (mvn)
 -------
 Библиотека Swing для создания графического интерфейса (GUI) в приложениях на языке Java
 

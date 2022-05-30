@@ -65,25 +65,27 @@ public class WellFundConverter {
 
     /**
      * Метод runFileScan() сканирует файлы MS Excel с однотипной структурой
+     * Обработка ведется по первому листу, получаемому из метода .getSheetAt(0)
      *
      * @param fileInStr
      */
-    private void runFileScan(String fileInStr) throws IOException {
-
+    private void runFileScan(String fileInStr) {
         iSwingForm.textAreaAppend("Обработка " + fileInStr + "...");
-
-        XSSFWorkbook excelInBook = new XSSFWorkbook(new FileInputStream(fileInStr));
-        XSSFSheet excelInBookSheet = excelInBook.getSheetAt(0); // getSheet("Лист1"); // или по индексу листа
-
-        //
-
-        System.out.println("getFirstRowNum()=" + excelInBookSheet.getFirstRowNum());
-        System.out.println("getLastRowNum()=" + excelInBookSheet.getLastRowNum());
-
-        excelInBook.close();
-
+        XSSFWorkbook excelInBook = null;
+        try {
+            excelInBook = new XSSFWorkbook(new FileInputStream(fileInStr));
+            XSSFSheet excelInBookSheet = excelInBook.getSheetAt(0);
+            iSwingForm.progressBarSetMin(0);
+            iSwingForm.progressBarSetMax(0);
+            for (int i = excelInBookSheet.getFirstRowNum(); i < excelInBookSheet.getLastRowNum(); i++) {
+                iSwingForm.progressBarStep();
+            }
+            excelInBook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
         iSwingForm.textAreaAppend("Обработка " + fileInStr + " завершена!");
-
     }
 
 

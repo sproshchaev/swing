@@ -51,8 +51,6 @@ public class SwingForm implements ISwingForm {
 
     public JTextArea textArea;
     JProgressBar progressBar;
-    Integer progressBarMinimum;
-    Integer progressBarMaximum;
     Integer progressBarValue;
 
     /**
@@ -176,9 +174,6 @@ public class SwingForm implements ISwingForm {
 
         progressBar = new JProgressBar();
         progressBar.setStringPainted(true);
-        progressBarMinimum = 0;
-        progressBarMaximum = 1000;
-        progressBarValue = 0;
 
         indicatorPanel.add(progressBar);
 
@@ -481,6 +476,27 @@ public class SwingForm implements ISwingForm {
     @Override
     public void textAreaAppend(String string) {
         textArea.append(string + "\n");
+    }
+
+    /**
+     * Метод progressBarSetMin вызывает методы .setMinimum() и .setValue(0) для компонента JProgressBar
+     *
+     * @param min
+     */
+    @Override
+    public void progressBarSetMin(int min) {
+        progressBar.setMinimum(min);
+        progressBar.setValue(min);
+    }
+
+    /**
+     * Метод progressBarSetMax вызывает метод .setMaximum() для компонента JProgressBar
+     *
+     * @param max
+     */
+    @Override
+    public void progressBarSetMax(int max) {
+        progressBar.setMinimum(max);
     }
 
 }
